@@ -47,26 +47,19 @@ Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RESET);
 
 Adafruit_ADS1115 ads1;
 Adafruit_ADS1115 ads2;
-
 int analog_value = 0;
 
 int readSwitch(){
   analog_value = analogRead(ANALOG_PIN_0);
-
- 
-  return analog_value                                                                                                ; //Read analog
+  return analog_value; //Read analog
 }
 
 void setup() {
- 
  Serial.begin(9600);
- 
  pinMode(RS485_FC, OUTPUT); 
  digitalWrite(RS485_FC, HIGH);
-
  Serial2.begin(115200, SERIAL_8N1,RS485_RXD,RS485_TXD);
 
-  
   pinMode(OUTPUT1, OUTPUT);
   pinMode(OUTPUT2, OUTPUT);
   pinMode(OUTPUT3, OUTPUT);
@@ -84,7 +77,6 @@ void setup() {
   pinMode(INPUT6, INPUT);
   pinMode(INPUT7, INPUT);
   pinMode(INPUT8, INPUT);
-
   
   Wire.begin(16,17);
 
@@ -95,32 +87,24 @@ void setup() {
   display.display();
   
  Wire.begin(I2C1_SDA,I2C1_SCL);
-  delay(100);
-  I2C_SCAN_1();
- Serial.println("\nI2C Scanner");
- 
-    
+ delay(100);
+ I2C_SCAN_1();
+ Serial.println("\nI2C Scanner");   
     
  if (!ads1.begin(0x48)) {
     Serial.println("Failed to initialize ADS 1 .");
    // while (1);
   }
-
   if (!ads2.begin(0x49)) {
     Serial.println("Failed to initialize ADS 1 .");
    // while (1);
   }
-
   adcAttachPin(32);
   digitalWrite(RS485_FC, HIGH);   // RS-485 
-
 }
 
-
 void loop() {
-
   int16_t adc0, adc1, adc2, adc3;
- 
   Serial.println(""); 
   Serial2.print(digitalRead(INPUT1));
   Serial2.print(digitalRead(INPUT2));
@@ -132,7 +116,8 @@ void loop() {
   Serial2.print(digitalRead(INPUT8));
   Serial2.println(""); 
 
-  Serial2.print("Push button  ");Serial2.println(readSwitch());
+  Serial2.print("Push button  ");
+  Serial2.println(readSwitch());
   Serial2.println(""); 
 
   adc0 = ads1.readADC_SingleEnded(0);
@@ -154,8 +139,7 @@ void loop() {
   Serial2.println("-----------------------------------------------------------");
   Serial2.print("AIN4: "); Serial2.print(adc0); Serial2.println("  ");
   Serial2.print("AIN5: "); Serial2.print(adc1); Serial2.println("  ");
-  
-  
+    
   digitalWrite(OUTPUT1, HIGH);
   digitalWrite(OUTPUT2, LOW);
   digitalWrite(OUTPUT3, LOW);
@@ -229,16 +213,13 @@ void loop() {
   digitalWrite(OUTPUT6, LOW);
   digitalWrite(OUTPUT7, LOW);
   digitalWrite(OUTPUT8, HIGH);
-  
   delay(200);
   
   digitalWrite(RS485_FC, HIGH);                    // Make FLOW CONTROL pin HIGH
   delay(500);
   Serial2.println(F("RS485 01 SUCCESS"));    // Send RS485 SUCCESS serially
   delay(500);                                // Wait for transmission of data
-  digitalWrite(RS485_FC, LOW) ;                    // Receiving mode ON
-
-                                             // Serial1.flush() ;
+  digitalWrite(RS485_FC, LOW) ;                    // Receiving mode ON                                          
   delay(1000);     
   
   while (Serial2.available()) {  // Check if data is available
@@ -246,11 +227,10 @@ void loop() {
     Serial.write(c);             // Print data on serial monitor
   }
    delay(500);
-}
+ }
  void I2C_SCAN_1(){
   byte error, address;
   int deviceCount = 0;
-
   Serial.println("Scanning...");
 
   for (address = 1; address < 127; address++) {
@@ -283,6 +263,5 @@ void loop() {
   else {
     Serial.println("Wire 1 Scanning complete\n");
   }
-
   delay(1000);  // Wait for 5 seconds before scanning again
 }
