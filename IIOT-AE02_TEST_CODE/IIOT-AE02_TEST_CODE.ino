@@ -1,9 +1,7 @@
-
 /*
  * RS485
  * All Output Turn ON Series
  * All input status serial print
- 
  */
 
 #include <SPI.h>
@@ -77,7 +75,6 @@ void setup() {
   pinMode(INPUT6, INPUT);
   pinMode(INPUT7, INPUT);
   pinMode(INPUT8, INPUT);
-  
   Wire.begin(16,17);
 
   if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
@@ -85,19 +82,15 @@ void setup() {
     for(;;); // Don't proceed, loop forever
   }
   display.display();
-  
- Wire.begin(I2C1_SDA,I2C1_SCL);
- delay(100);
- I2C_SCAN_1();
- Serial.println("\nI2C Scanner");   
-    
- if (!ads1.begin(0x48)) {
+  Wire.begin(I2C1_SDA,I2C1_SCL);
+  delay(100);
+  I2C_SCAN_1();
+  Serial.println("\nI2C Scanner");       
+  if (!ads1.begin(0x48)) {
     Serial.println("Failed to initialize ADS 1 .");
-   // while (1);
   }
   if (!ads2.begin(0x49)) {
     Serial.println("Failed to initialize ADS 1 .");
-   // while (1);
   }
   adcAttachPin(32);
   digitalWrite(RS485_FC, HIGH);   // RS-485 
@@ -226,7 +219,7 @@ void loop() {
     char c = Serial2.read();     // Read data from RS485
     Serial.write(c);             // Print data on serial monitor
   }
-   delay(500);
+  delay(500);
  }
  void I2C_SCAN_1(){
   byte error, address;
@@ -244,7 +237,6 @@ void loop() {
       }
       Serial.print(address, HEX);
       Serial.println("  !");
-
       deviceCount++;
       delay(1);  // Wait for a moment to avoid overloading the I2C bus
     }
