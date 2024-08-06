@@ -4,7 +4,7 @@
 
 #define FC 4
 #define RXD 3
-#define TXD 1
+#define TXD 2
 
 #define SCREEN_WIDTH 128
 #define SCREEN_HEIGHT 64
@@ -23,7 +23,7 @@ void setup() {
 }
 
 void loop() { 
-  Serial1.println(F("RS485 01 SUCCESS"));
+  Serial.println("RS485 01 SUCCESS");
 
   while (Serial.available()) {  // Check if data is available
     char c = Serial.read();     // Read data from RS485
